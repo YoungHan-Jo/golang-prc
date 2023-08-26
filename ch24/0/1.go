@@ -25,7 +25,7 @@ func main() {
 		sc.Scan()
 		stock, _ := strconv.Atoi(sc.Text())
 
-		if i == n && count > 0 {
+		if i == n {
 			sum += stock * count
 			break
 		}
