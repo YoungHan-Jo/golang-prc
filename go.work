@@ -4,6 +4,8 @@ use (
 	./ch16/2
 	./ch16/3
 	./ch20
+	./ch28/1
+	./ch28/2
 	./hello
 	./hello2
 	./scan
