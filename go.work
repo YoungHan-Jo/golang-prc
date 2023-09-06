@@ -1,6 +1,7 @@
 go 1.20
 
 use (
+	./appB/exB1
 	./ch16/2
 	./ch16/3
 	./ch20
