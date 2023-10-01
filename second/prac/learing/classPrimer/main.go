@@ -8,34 +8,43 @@ import (
 	"strings"
 )
 
-type student struct {
-	name  string
-	old   string
-	birth string
-	state string
+type User struct {
+	nickname string
+	old      string
+	birth    string
+	state    string
+}
+
+func (u *User) changeName(name *string) {
+	u.nickname = *name
 }
 
 func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Scan()
 
-	n, _ := strconv.Atoi(sc.Text())
+	strs := strings.Split(sc.Text(), " ")
 
-	var students []student
+	n, _ := strconv.Atoi(strs[0])
+	k, _ := strconv.Atoi(strs[1])
+
+	var users []User
 
 	for i := 0; i < n; i++ {
 		sc.Scan()
 		strs := strings.Split(sc.Text(), " ")
-		students = append(students, student{strs[0], strs[1], strs[2], strs[3]})
+		users = append(users, User{strs[0], strs[1], strs[2], strs[3]})
 	}
 
-	sc.Scan()
-	old := sc.Text()
+	for i := 0; i < k; i++ {
+		sc.Scan()
+		strs := strings.Split(sc.Text(), " ")
+		index, _ := strconv.Atoi(strs[0])
 
-	for _, v := range students {
-		if v.old == old {
-			fmt.Println(v.name)
-			break
-		}
+		users[index-1].changeName(&strs[1])
+	}
+
+	for _, v := range users {
+		fmt.Printf("%s %s %s %s\n", v.nickname, v.old, v.birth, v.state)
 	}
 }
