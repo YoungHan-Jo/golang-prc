@@ -40,7 +40,6 @@ func main() {
 		sc.Scan()
 		strs := strings.Split(sc.Text(), " ")
 		index, _ := strconv.Atoi(strs[0])
-
 		users[index-1].changeName(&strs[1])
 	}
 
