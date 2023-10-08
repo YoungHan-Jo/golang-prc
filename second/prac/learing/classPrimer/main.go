@@ -8,42 +8,66 @@ import (
 	"strings"
 )
 
-type User struct {
-	nickname string
-	old      string
-	birth    string
-	state    string
+type Employee interface {
+	GetNum() string
+	GetName() string
+	ChangeName(*string)
+	ChangeNum(*string)
 }
 
-func (u *User) changeName(name *string) {
-	u.nickname = *name
+func NewEmployee(number, name string) Employee {
+	return &employee{number, name}
+}
+
+type employee struct {
+	number string
+	name   string
+}
+
+func (e *employee) GetNum() string {
+	return e.number
+}
+
+func (e *employee) GetName() string {
+	return e.name
+}
+
+func (e *employee) ChangeName(newName *string) {
+	e.name = *newName
+}
+
+func (e *employee) ChangeNum(newNum *string) {
+	e.number = *newNum
 }
 
 func main() {
 	sc := bufio.NewScanner(os.Stdin)
 	sc.Scan()
 
-	strs := strings.Split(sc.Text(), " ")
+	n, _ := strconv.Atoi(sc.Text())
 
-	n, _ := strconv.Atoi(strs[0])
-	k, _ := strconv.Atoi(strs[1])
-
-	var users []User
+	var employees []Employee
 
 	for i := 0; i < n; i++ {
 		sc.Scan()
 		strs := strings.Split(sc.Text(), " ")
-		users = append(users, User{strs[0], strs[1], strs[2], strs[3]})
-	}
 
-	for i := 0; i < k; i++ {
-		sc.Scan()
-		strs := strings.Split(sc.Text(), " ")
-		index, _ := strconv.Atoi(strs[0])
-		users[index-1].changeName(&strs[1])
-	}
-
-	for _, v := range users {
-		fmt.Printf("%s %s %s %s\n", v.nickname, v.old, v.birth, v.state)
+		switch strs[0] {
+		case "make":
+			newEmp := NewEmployee(strs[1], strs[2])
+			employees = append(employees, newEmp)
+		case "getnum":
+			index, _ := strconv.Atoi(strs[1])
+			fmt.Println(employees[index-1].GetNum())
+		case "getname":
+			index, _ := strconv.Atoi(strs[1])
+			fmt.Println(employees[index-1].GetName())
+		case "change_num":
+			index, _ := strconv.Atoi(strs[1])
+			employees[index-1].ChangeNum(&strs[2])
+		case "change_name":
+			index, _ := strconv.Atoi(strs[1])
+			employees[index-1].ChangeName(&strs[2])
+		}
 	}
 }
