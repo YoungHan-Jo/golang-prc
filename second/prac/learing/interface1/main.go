@@ -12,7 +12,7 @@ type Customer interface {
 	OrderFood(*int)
 	OrderAlcohol(*int)
 	OrderSoftdrink(*int)
-	GetAmmount() int
+	GetAmmount() *int
 }
 
 func NewAdult() *adult {
@@ -43,8 +43,8 @@ func (a *adult) OrderSoftdrink(price *int) {
 	a.ammount += *price
 }
 
-func (a *adult) GetAmmount() int {
-	return a.ammount
+func (a *adult) GetAmmount() *int {
+	return &a.ammount
 }
 
 type kid struct {
@@ -63,8 +63,8 @@ func (k *kid) OrderSoftdrink(price *int) {
 	k.ammount += *price
 }
 
-func (k *kid) GetAmmount() int {
-	return k.ammount
+func (k *kid) GetAmmount() *int {
+	return &k.ammount
 }
 
 func main() {
@@ -104,7 +104,7 @@ func main() {
 	}
 
 	for _, c := range customers {
-		fmt.Println(c.GetAmmount())
+		fmt.Println(*c.GetAmmount())
 	}
 
 }
